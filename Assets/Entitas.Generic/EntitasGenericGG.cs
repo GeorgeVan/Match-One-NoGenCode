@@ -1,4 +1,7 @@
-﻿using GLib;
+﻿using System;
+using System.Reflection;
+using Entitas.Generic;
+using UnityEngine;
 
 public partial class Contexts
 {
@@ -13,10 +16,37 @@ public partial class Contexts
             }
             catch (System.Exception ex)
             {
-                Mini.Error(ex, "CreateContextObserver异常");
+                Debug.LogErrorFormat("CreateContextObserver异常[{0}]", ex);
             }
         }
-        Mini.Success("InitVisualDebugging完成");
 #endif
+    }
+}
+
+namespace Entitas.Generic
+{
+    public partial class ScopedContext<TScope>
+    {
+        public void Flip<TComp>() where TComp : class, Scope<TScope>, IComponent, ICompFlag, IUnique, new()
+        {
+            Flag<TComp>(!Is<TComp>());
+        }
+    }
+
+    public static class BootConfig
+    {
+        private static Assembly[]       _ScannedAssemblies;
+        public static  Assembly[]       ScannedAssemblies { get => _ScannedAssemblies ?? _AllAssemblies.Value; set => _ScannedAssemblies = value; }
+        private static Lazy<Assembly[]> _AllAssemblies = new Lazy<Assembly[]>(() => AppDomain.CurrentDomain.GetAssemblies());
+    }
+}
+
+namespace Entitas
+{
+    public abstract class ReactiveSystemG<TS> : ReactiveSystem<Generic.Entity<TS>> where TS : IScope
+    {
+        protected ReactiveSystemG(Contexts contexts) : base(contexts.Get<TS>()) { }
+
+        protected ReactiveSystemG(ICollector<Entity<TS>> collector) : base(collector) { }
     }
 }

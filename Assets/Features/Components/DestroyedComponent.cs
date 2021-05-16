@@ -1,7 +1,11 @@
 using Entitas;
 using Entitas.CodeGeneration.Attributes;
+using Entitas.Generic;
 
-[Event(EventTarget.Self), Cleanup(CleanupMode.DestroyEntity)]
-public sealed class DestroyedComponent : IComponent
+public sealed class DestroyedG :
+    IComponent,
+    ICompFlag,
+    Scope<GameScope>,
+    IEvent_Self<GameScope, DestroyedG>
 {
 }

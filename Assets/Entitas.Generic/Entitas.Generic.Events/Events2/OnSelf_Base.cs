@@ -15,6 +15,13 @@ namespace Entitas.Generic
 
         private Contexts _db;
 
+        /// 这个也是一个字典，和缺省的GenCode类型的EventSystem不同，不会新增Component。
+        /// GenCode和Event实现是将每个Entity的每种监听列表作为组件记录在那个类里面。因此如果类销毁了则一切都销毁。
+        /// 而这个就得在类销毁的时候UnSub。
+        /// 所以对于OnSelf，用Event1模型会节省内存。
+        /// 无论用什么方案，Generic框架在启动的时候都会根据定义来自动添加相关EventListenerComponent的槽位。
+        /// 只不过Event2方案不去理会这个槽位，用字典来直接实现。
+        /// 对于Any来说还是很方便直观的。
         private Dictionary<KeyValuePair<Context<Entity<TScope>>, int>, Action<Entity<TScope>>>
             ActionDict = new Dictionary<KeyValuePair<Context<Entity<TScope>>, int>, Action<Entity<TScope>>>();
 

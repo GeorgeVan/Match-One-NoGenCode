@@ -35,7 +35,7 @@ namespace Entitas.Generic
 
         private static void Scan_IComponents()
         {
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            foreach (var assembly in BootConfig.ScannedAssemblies)
             {
                 foreach (var type in assembly.GetTypes())
                 {
@@ -57,7 +57,7 @@ namespace Entitas.Generic
         private static List<Type> Collect_EventAnyComps()
         {
             var eventComps = new List<Type>();
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            foreach (var assembly in BootConfig.ScannedAssemblies)
             {
                 foreach (var type in assembly.GetTypes())
                 {
@@ -76,7 +76,7 @@ namespace Entitas.Generic
         private static List<Type> Collect_EventAnyRemovedComps()
         {
             var eventComps = new List<Type>();
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            foreach (var assembly in BootConfig.ScannedAssemblies)
             {
                 foreach (var type in assembly.GetTypes())
                 {
@@ -95,7 +95,7 @@ namespace Entitas.Generic
         private static List<Type> Collect_EventSelfComps()
         {
             var eventComps = new List<Type>();
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            foreach (var assembly in BootConfig.ScannedAssemblies)
             {
                 foreach (var type in assembly.GetTypes())
                 {
@@ -114,7 +114,7 @@ namespace Entitas.Generic
         private static List<Type> Collect_EventSelfRemovedComps()
         {
             var eventComps = new List<Type>();
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            foreach (var assembly in BootConfig.ScannedAssemblies)
             {
                 foreach (var type in assembly.GetTypes())
                 {

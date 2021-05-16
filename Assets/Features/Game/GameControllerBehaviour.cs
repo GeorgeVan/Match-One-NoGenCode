@@ -15,7 +15,12 @@ public class GameControllerBehaviour : MonoBehaviour
 
     GameController _gameController;
 
-    void Awake() => _gameController = new GameController(Contexts.sharedInstance, gameConfig);
+    void Awake()
+    {
+        Contexts.BootWithCodeGenAndGenerics(typeof(GameScope).Assembly);
+        _gameController = new GameController(Contexts.sharedInstance, gameConfig);
+    }
+
     void Start() => _gameController.Initialize();
     void Update() => _gameController.Execute();
 }

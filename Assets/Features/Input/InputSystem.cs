@@ -1,5 +1,6 @@
 ﻿using System;
 using Entitas;
+using Entitas.Generic;
 using UnityEngine;
 
 public sealed class InputSystem : IExecuteSystem
@@ -20,25 +21,24 @@ public sealed class InputSystem : IExecuteSystem
     void setBurstMode()
     {
         if (Input.GetKeyDown(KeyCode.B))
-        {
-            _contexts.input.isBurstMode = !_contexts.input.isBurstMode;
-        }
+            _contexts.InputC.Flip<BurstModeG>();
     }
 
     void emitInput()
     {
-        var input = _contexts.input.isBurstMode
+        var input = _contexts.InputC.Is<BurstModeG>()
             ? Input.GetMouseButton(0)
             : Input.GetMouseButtonDown(0);
 
         if (input)
         {
             var mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            var e = _contexts.input.CreateEntity();
-            e.AddInput(new Vector2Int(
-                (int)Math.Round(mouseWorldPos.x),
-                (int)Math.Round(mouseWorldPos.y)
-            ));
+            var e = _contexts.InputC.CreateEntity();
+            e.Add(Cache<InputG>.I.Set(
+                new Vector2Int(
+                    (int) Math.Round(mouseWorldPos.x),
+                    (int) Math.Round(mouseWorldPos.y)
+                )));
         }
     }
 }

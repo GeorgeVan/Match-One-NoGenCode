@@ -1,27 +1,30 @@
 ﻿using System.Collections.Generic;
 using Entitas;
+using Entitas.Generic;
+using GameEntityG = Entitas.Generic.Entity<GameScope>;
 
-public sealed class ScoreSystem : ReactiveSystem<GameEntity>, IInitializeSystem
+public sealed class ScoreSystem : ReactiveSystemG<GameScope>, IInitializeSystem
 {
     readonly Contexts _contexts;
 
-    public ScoreSystem(Contexts contexts) : base(contexts.game)
+    public ScoreSystem(Contexts contexts) : base(contexts)
     {
         _contexts = contexts;
     }
 
     public void Initialize()
     {
-        _contexts.gameState.SetScore(0);
+        _contexts.GameStateC.Set(Cache<ScoreG>.I.Set(0));
     }
 
-    protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context)
-        => context.CreateCollector(GameMatcher.Destroyed);
+    protected override ICollector<GameEntityG> GetTrigger(IContext<GameEntityG> context)
+        => context.CreateCollector(Matcher<GameScope, DestroyedG>.I);
 
-    protected override bool Filter(GameEntity entity) => entity.isDestroyed && entity.isPiece;
+    protected override bool Filter(GameEntityG entity) => entity.Is<DestroyedG>() && entity.Is<PieceG>();
 
-    protected override void Execute(List<GameEntity> entities)
+    protected override void Execute(List<GameEntityG> entities)
     {
-        _contexts.gameState.ReplaceScore(_contexts.gameState.score.value + entities.Count);
+        _contexts.GameStateC.Replace(Cache<ScoreG>.I.Set(
+            _contexts.GameStateC.Get<ScoreG>().value + entities.Count));
     }
 }

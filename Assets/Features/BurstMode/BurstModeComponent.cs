@@ -1,7 +1,12 @@
 ﻿using Entitas;
-using Entitas.CodeGeneration.Attributes;
+using Entitas.Generic;
 
-[Input, Unique, Event(EventTarget.Any), Event(EventTarget.Any, EventType.Removed)]
-public sealed class BurstModeComponent : IComponent
+public sealed class BurstModeG :
+    IComponent,
+    ICompFlag,
+    IUnique,
+    Scope<InputScope>,
+    IEvent_Any<InputScope, BurstModeG>,
+    IEvent_AnyRemoved<InputScope, BurstModeG>
 {
 }

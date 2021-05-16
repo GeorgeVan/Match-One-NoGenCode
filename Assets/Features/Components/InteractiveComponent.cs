@@ -1,5 +1,4 @@
 using Entitas;
+using Entitas.Generic;
 
-public sealed class InteractiveComponent : IComponent
-{
-}
+public sealed class InteractiveG : IComponent, ICompFlag, Scope<GameScope> { }

@@ -1,15 +1,17 @@
 ﻿using DG.Tweening;
 using UnityEngine;
+using GameEntityG=Entitas.Generic.Entity<GameScope>;
 
 public class PieceView : View
 {
     public SpriteRenderer sprite;
     public float destroyDuration;
 
-    public override void OnPosition(GameEntity entity, Vector2Int value)
+    public override void OnSelf(PositionG component, GameEntityG entity, Contexts contexts)
     {
+        var value = component.value;
         transform.DOKill();
-        var isTopRow = value.y == Contexts.sharedInstance.game.board.value.y - 1;
+        var isTopRow = value.y == Contexts.sharedInstance.GameStateC.Get<BoardG>().value.y - 1;
         if (isTopRow)
         {
             transform.localPosition = new Vector3(value.x, value.y + 1);

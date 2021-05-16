@@ -1,4 +1,6 @@
-﻿public sealed class GameSystems : Feature
+﻿using Entitas.Generic;
+
+public sealed class GameSystems : Feature
 {
     public GameSystems(Contexts contexts)
     {
@@ -15,13 +17,13 @@
         // View
         Add(new AddViewSystem(contexts));
 
-        // Events (Generated)
-        Add(new InputEventSystems(contexts));
-        Add(new GameEventSystems(contexts));
-        Add(new GameStateEventSystems(contexts));
+        Add(new EventSystem_Any2<GameStateScope, ScoreG>(contexts));
+        Add(new EventSystem_Any_Flag2<InputScope, BurstModeG>(contexts));
+        
+        Add(new EventSystem_SelfFlag<GameScope, DestroyedG>(contexts));
+        Add(new EventSystem_Self<GameScope, PositionG>(contexts));
 
-        // Cleanup (Generated, only with Entitas Asset Store version)
-        //Add(new InputCleanupSystems(contexts));
-        //Add(new GameCleanupSystems(contexts));
+        Add(contexts.GameC.CreateDestorySystem(Matcher<GameScope, DestroyedG>.I));
+        Add(contexts.InputC.CreateDestorySystem(Matcher<InputScope, InputG>.I));
     }
 }

@@ -45,7 +45,7 @@ namespace Entitas.Generic
                 return;
             }
 
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            foreach (var assembly in BootConfig.ScannedAssemblies)
             {
                 foreach (var type in assembly.GetTypes())
                 {

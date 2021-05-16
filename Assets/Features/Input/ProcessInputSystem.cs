@@ -1,29 +1,31 @@
 ﻿using System.Collections.Generic;
 using Entitas;
+using Entitas.Generic;
+using InputEntityG = Entitas.Generic.Entity<InputScope>;
 
-public sealed class ProcessInputSystem : ReactiveSystem<InputEntity>
+public sealed class ProcessInputSystem : ReactiveSystemG<InputScope>
 {
     readonly Contexts _contexts;
 
-    public ProcessInputSystem(Contexts contexts) : base(contexts.input)
+    public ProcessInputSystem(Contexts contexts) : base(contexts)
     {
         _contexts = contexts;
     }
 
-    protected override ICollector<InputEntity> GetTrigger(IContext<InputEntity> context)
-        => context.CreateCollector(InputMatcher.Input);
+    protected override ICollector<InputEntityG> GetTrigger(IContext<InputEntityG> context)
+        => context.CreateCollector(Matcher<InputScope,InputG>.I);
 
-    protected override bool Filter(InputEntity entity) => entity.hasInput;
+    protected override bool Filter(InputEntityG entity) => entity.Has<InputG>();
 
-    protected override void Execute(List<InputEntity> entities)
+    protected override void Execute(List<InputEntityG> entities)
     {
         var inputEntity = entities.SingleEntity();
-        var input = inputEntity.input;
+        var input = inputEntity.Get<InputG>();
 
-        var e = _contexts.game.GetPieceWithPosition(input.value);
-        if (e != null && e.isInteractive)
+        var e = _contexts.GameC.GetPieceWithPosition(input.value);
+        if (e != null && e.Is<InteractiveG>())
         {
-            e.isDestroyed = true;
+            e.Flag<DestroyedG>(true);
         }
     }
 }

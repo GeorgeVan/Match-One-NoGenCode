@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using Entitas.Generic;
+using UnityEngine;
 using UnityEngine.UI;
+using InputEntityG = Entitas.Generic.Entity<InputScope>;
 
-public class BurstModeLabelController : MonoBehaviour, IAnyBurstModeListener, IAnyBurstModeRemovedListener
+public class BurstModeLabelController : MonoBehaviour
 {
     public Text label;
 
@@ -15,27 +17,13 @@ public class BurstModeLabelController : MonoBehaviour, IAnyBurstModeListener, IA
     void Start()
     {
         var contexts = Contexts.sharedInstance;
-        var listener = contexts.input.CreateEntity();
-        listener.AddAnyBurstModeListener(this);
-        listener.AddAnyBurstModeRemovedListener(this);
-
-        if (contexts.input.isBurstMode)
-        {
-            OnAnyBurstMode(contexts.input.burstModeEntity);
-        }
-        else
-        {
-            OnAnyBurstModeRemoved(contexts.input.burstModeEntity);
-        }
+        OnAny_Flag<InputScope, BurstModeG>.I.Sub(e => onAnyBurstMode(e.Is<BurstModeG>()));
+        onAnyBurstMode(contexts.InputC.Is<BurstModeG>());
+        //OnAny_Flag只有一个回调函数，所以需要在回调里面判断是TRUE还是FALSE。
     }
 
-    public void OnAnyBurstMode(InputEntity entity)
+    void onAnyBurstMode(bool burst)
     {
-        label.text = _text + ": on";
-    }
-
-    public void OnAnyBurstModeRemoved(InputEntity entity)
-    {
-        label.text = _text + ": off";
+        label.text = _text + (burst ? ": on" : ": off");
     }
 }

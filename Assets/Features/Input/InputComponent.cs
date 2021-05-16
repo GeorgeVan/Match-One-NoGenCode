@@ -1,9 +1,25 @@
 using Entitas;
 using Entitas.CodeGeneration.Attributes;
+using Entitas.Generic;
 using UnityEngine;
 
-[Input, Cleanup(CleanupMode.DestroyEntity)]
-public sealed class InputComponent : IComponent
+public sealed class InputG
+    : IComponent,
+        ICompData,
+        ICopyFrom<InputG>,
+        ICreateApply,
+        Scope<InputScope>
 {
     public Vector2Int value;
+
+    public void CopyFrom(InputG other)
+    {
+        value = other.value;
+    }
+
+    public InputG Set(Vector2Int v)
+    {
+        value = v;
+        return this;
+    }
 }
