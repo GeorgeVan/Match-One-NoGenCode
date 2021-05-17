@@ -1,5 +1,6 @@
 using UnityEngine;
 
+/// 直接被主场景引用
 [CreateAssetMenu(menuName = "Match One/Game Config")]
 public class ScriptableGameConfig : ScriptableObject, IGameConfig
 {

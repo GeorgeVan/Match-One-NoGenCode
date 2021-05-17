@@ -1,25 +1,24 @@
 ﻿using System;
 using System.Reflection;
+using Entitas;
 using Entitas.Generic;
-using UnityEngine;
 
 public partial class Contexts
 {
-    public void SafeInitVisualDebuggingForGenerics()
+    public ScopedContext<TScope> Scope<TScope>() where TScope : IScope => Get<TScope>();
+
+    public ICleanupSystem CreateDestorySystem<TScope, TComponent>()
+        where TScope : IScope
+        where TComponent : IComponent, Scope<TScope>
+        => CreateDestorySystem(Matcher<TScope, TComponent>.I);
+
+    public ICleanupSystem CreateDestorySystem<TScope>(IMatcher<Entity<TScope>> m)
+        where TScope : IScope
+        => Scope<TScope>().CreateDestorySystem(m);
+
+    static Contexts()
     {
-#if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-        foreach (var context in All)
-        {
-            try
-            {
-                CreateContextObserver(context);
-            }
-            catch (System.Exception ex)
-            {
-                Debug.LogErrorFormat("CreateContextObserver异常[{0}]", ex);
-            }
-        }
-#endif
+        Lookup_ScopeManager.RegisterAll();
     }
 }
 
@@ -45,7 +44,14 @@ namespace Entitas
 {
     public abstract class ReactiveSystemG<TS> : ReactiveSystem<Generic.Entity<TS>> where TS : IScope
     {
-        protected ReactiveSystemG(Contexts contexts) : base(contexts.Get<TS>()) { }
+        protected readonly Contexts          _contexts;
+        protected readonly ScopedContext<TS> Scope;
+
+        protected ReactiveSystemG(Contexts contexts) : base(contexts.Get<TS>())
+        {
+            _contexts = contexts;
+            Scope     = contexts.Get<TS>();
+        }
 
         protected ReactiveSystemG(ICollector<Entity<TS>> collector) : base(collector) { }
     }

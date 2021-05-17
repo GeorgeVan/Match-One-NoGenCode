@@ -2,6 +2,7 @@
 using UnityEngine;
 using GameEntityG=Entitas.Generic.Entity<GameScope>;
 
+/// 直接被棋子Prefab引用，Prefab在AddViewSystem被克隆并Link在Entity上
 public class PieceView : View
 {
     public SpriteRenderer sprite;
@@ -11,7 +12,7 @@ public class PieceView : View
     {
         var value = component.value;
         transform.DOKill();
-        var isTopRow = value.y == Contexts.sharedInstance.GameStateC.Get<BoardG>().value.y - 1;
+        var isTopRow = value.y == ContextHolder.I.Scope<GameStateScope>().Get<BoardG>().value.y - 1;
         if (isTopRow)
         {
             transform.localPosition = new Vector3(value.x, value.y + 1);

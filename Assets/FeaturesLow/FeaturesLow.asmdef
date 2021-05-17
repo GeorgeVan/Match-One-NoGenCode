@@ -1,0 +1,17 @@
+{
+  "name": "FeaturesLow",
+  "references": [
+    "ComponentsShared",
+    "Entitas.Generic",
+    "Entitas.Generic.GGS"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

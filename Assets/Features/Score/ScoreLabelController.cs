@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// 直接被主场景引用 
 public class ScoreLabelController : MonoBehaviour
 {
     public Text label;

@@ -1,0 +1,13 @@
+{
+	"name": "Entitas.Generic.GGS",
+	"references": ["Entitas.Generic"],
+	"includePlatforms": [],
+	"excludePlatforms": [],
+	"allowUnsafeCode": false,
+	"overrideReferences": false,
+	"precompiledReferences": [],
+	"autoReferenced": true,
+	"defineConstraints": [],
+	"versionDefines": [],
+	"noEngineReferences": false
+}

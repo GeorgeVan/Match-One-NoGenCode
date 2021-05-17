@@ -1,0 +1,19 @@
+{
+  "name": "FeaturesLowUnity",
+  "references": [
+    "ComponentsShared",
+    "Entitas.GG",
+    "Entitas.Generic",
+    "Entitas.Generic.GGS",
+    "FeaturesLow"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

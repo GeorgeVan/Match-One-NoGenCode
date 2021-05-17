@@ -9,21 +9,15 @@ public class BurstModeLabelController : MonoBehaviour
 
     string _text;
 
-    void Awake()
-    {
-        _text = label.text;
-    }
+    void Awake() => _text = label.text;
 
     void Start()
     {
-        var contexts = Contexts.sharedInstance;
-        OnAny_Flag<InputScope, BurstModeG>.I.Sub(e => onAnyBurstMode(e.Is<BurstModeG>()));
-        onAnyBurstMode(contexts.InputC.Is<BurstModeG>());
+        OnAny_Flag<InputScope, BurstModeG>.I.Sub(e => refreshLabel(e.Is<BurstModeG>()));
+        refreshLabel(ContextHolder.I.Scope<InputScope>().Is<BurstModeG>());
         //OnAny_Flag只有一个回调函数，所以需要在回调里面判断是TRUE还是FALSE。
     }
 
-    void onAnyBurstMode(bool burst)
-    {
+    void refreshLabel(bool burst) =>
         label.text = _text + (burst ? ": on" : ": off");
-    }
 }
