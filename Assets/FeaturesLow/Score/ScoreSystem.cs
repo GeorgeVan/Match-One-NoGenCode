@@ -13,9 +13,9 @@ public sealed class ScoreSystem : ReactiveSystemApp<GameScope>, IInitializeSyste
     }
 
     protected override ICollector<GameEntityG> GetTrigger(IContext<GameEntityG> context)
-        => context.CreateCollector(Matcher<GameEntityG>.AllOf(Matcher<GameScope, DestroyedG>.I, Matcher<GameScope, PieceG>.I).NoneOf(Matcher<GameScope, KilledBuySysG>.I));
+        => context.CreateCollector(Matcher<GameEntityG>.AllOf(Matcher<GameScope, DestroyedG>.I, Matcher<GameScope, PieceG>.I).NoneOf(Matcher<GameScope, KilledBySysG>.I));
 
-    protected override bool Filter(GameEntityG entity) => entity.Is<DestroyedG>() && entity.Is<PieceG>() && !entity.Is<KilledBuySysG>();
+    protected override bool Filter(GameEntityG entity) => entity.Is<DestroyedG>() && entity.Is<PieceG>() && !entity.Is<KilledBySysG>();
 
     protected override void Execute(List<GameEntityG> entities)
     {

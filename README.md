@@ -38,3 +38,6 @@ It's a good place to compare the codegen and non-codegen.
 
 ## About the Chinese characters
 Just Ignore them.
+
+## About the Code Style
+Different Code styles may coexists.

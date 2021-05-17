@@ -25,7 +25,7 @@ public sealed class BoardSystem : ReactiveSystemApp<GameStateScope>, IInitialize
         //复位棋盘前，先把当前的全部删掉
         foreach (var e in _pieces)
         {
-            e.Flag<KilledBuySysG>(true);
+            e.Flag<KilledBySysG>(true);
             e.Flag<DestroyedG>(true);
         }
 
