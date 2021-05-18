@@ -15,7 +15,7 @@ namespace Entitas.Generic
 
         private Contexts _db;
 
-        /// 这个也是一个字典，和缺省的GenCode类型的EventSystem不同，不会新增Component。
+        /// GG 这个也是一个字典，和缺省的GenCode类型的EventSystem不同，不会新增Component。
         /// GenCode和Event实现是将每个Entity的每种监听列表作为组件记录在那个类里面。因此如果类销毁了则一切都销毁。
         /// 而这个就得在类销毁的时候UnSub。
         /// 所以对于OnSelf，用Event1模型会节省内存。

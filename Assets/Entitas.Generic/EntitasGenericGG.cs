@@ -37,6 +37,16 @@ namespace Entitas.Generic
         private static Assembly[]       _ScannedAssemblies;
         public static  Assembly[]       ScannedAssemblies { get => _ScannedAssemblies ?? _AllAssemblies.Value; set => _ScannedAssemblies = value; }
         private static Lazy<Assembly[]> _AllAssemblies = new Lazy<Assembly[]>(() => AppDomain.CurrentDomain.GetAssemblies());
+
+        /// <summary>
+        /// GG 因为可能要以DLL发布，所以需要暴露给上层。
+        /// </summary>
+        public static bool SafeAERC { get; set; } =
+#if (ENTITAS_FAST_AND_UNSAFE)
+            false;
+#else
+            true;
+#endif
     }
 }
 

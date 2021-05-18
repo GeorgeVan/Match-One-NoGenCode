@@ -18,7 +18,7 @@ namespace Entitas.Generic
         public static  List<String>            CompNamesFull   = new List<String>();
         public static  List<String>            CompNamesPretty = new List<String>();
         /// <summary>
-        /// 组件类型》组件索引
+        /// GG 组件类型》组件索引
         /// </summary>
         public static  Dictionary<Type, Int32> CompTypeToI     = new Dictionary<Type, Int32>();
         public static  bool                    IsDefined(Type compType) => CompTypeToI.ContainsKey(compType);

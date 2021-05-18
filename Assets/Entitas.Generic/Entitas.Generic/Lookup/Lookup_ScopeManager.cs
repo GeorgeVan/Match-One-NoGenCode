@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Reflection;
 
 namespace Entitas.Generic
@@ -22,12 +21,7 @@ namespace Entitas.Generic
                     Lookup<TScope>.CompNamesPrettyArray,
                     Lookup<TScope>.CompTypesArray
                 ),
-#if (ENTITAS_FAST_AND_UNSAFE)
-				AERCFactories.UnsafeAERCFactory
-#else
-                AERCFactories.SafeAERCFactory
-#endif
-                ,
+                BootConfig.SafeAERC ? AERCFactories.SafeAERCFactory : AERCFactories.UnsafeAERCFactory,
                 () => new Entity<TScope>()
             ));
 

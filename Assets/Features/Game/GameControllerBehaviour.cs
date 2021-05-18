@@ -1,3 +1,4 @@
+using Entitas.Generic;
 using UnityEngine;
 
 /**

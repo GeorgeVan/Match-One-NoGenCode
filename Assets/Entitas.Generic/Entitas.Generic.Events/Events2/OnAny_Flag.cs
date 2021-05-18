@@ -8,7 +8,7 @@ namespace Entitas.Generic
     {
         public OnAny_Flag(Contexts db) : base(db) { }
         /// <summary>
-        /// 在 <see cref="EventSystem_Any_Flag2"/> 里面设置。后者对接框架，这个对接上层。
+        /// GG 在 <see cref="EventSystem_Any_Flag2"/> 里面设置。后者对接框架，这个对接上层。
         /// </summary>
         public static IEventsFeature2_OnAny_Flag<TScope, TComp> I;
     }

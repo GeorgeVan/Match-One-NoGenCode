@@ -1,9 +1,21 @@
 ﻿using System;
 using System.Reflection;
 using Entitas.Generic;
+using UnityEngine;
 
 public static class ContextsInitVisualExt1
 {
+    [RuntimeInitializeOnLoadMethod]
+    public static void ConfigAERC()
+    {
+        BootConfig.SafeAERC =
+#if (ENTITAS_FAST_AND_UNSAFE)
+            false;
+#else
+            true;
+#endif
+    }
+
     public static void SafeInitVisualDebuggingForGenerics(this Contexts contexts)
     {
 #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
@@ -27,7 +39,6 @@ public static class ContextsInitVisualExt1
                 UnityEngine.Object.DontDestroyOnLoad(observer.gameObject);
             }
         }
-
 #endif
     }
 }

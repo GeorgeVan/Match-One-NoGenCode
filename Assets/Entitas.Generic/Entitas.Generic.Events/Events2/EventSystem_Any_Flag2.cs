@@ -11,7 +11,7 @@ namespace Entitas.Generic
         {
             if (OnAny_Flag<TScope, TComp>.I == null)
             {
-                // 如果有Context同类型多例，则用那个来创建都无所谓。然而只有db是缺省的。
+                // GG 如果有Context同类型多例，则用那个来创建都无所谓。然而只有db是缺省的。
                 OnAny_Flag<TScope, TComp>.I = new OnAny_Flag<TScope, TComp>(db);
             }
             _context = context ?? db.Get<TScope>();
